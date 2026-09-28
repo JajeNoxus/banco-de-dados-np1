@@ -1,0 +1,37 @@
+services:
+  postgres:
+    image: postgres:latest
+    container_name: pg_teste
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: pyturn3456
+      POSTGRES_DB: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - rede-banco
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pg_adminTeste
+    environment:
+      PGADMIN_DEFAULT_EMAIL: kakera@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: infokt9090
+    ports:
+      - "8080:80"
+    depends_on:
+      - postgres
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    networks:
+      - rede-banco
+
+volumes:
+  pgdata:
+  pgadmin_data:
+
+networks:
+  rede-banco:
+    driver: bridge
